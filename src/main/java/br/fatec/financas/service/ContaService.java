@@ -59,4 +59,28 @@ public class ContaService {
 		}
 		return false;
 	}
+	
+	//Depositar
+	public Float depositar(Long id, Float valor) throws IllegalArgumentException {
+		Conta _conta = find(id);
+		if(_conta != null) {
+			//atualiza saldo
+			_conta.setSaldo(_conta.getSaldo() + valor);
+			return _conta.getSaldo();
+		}
+		throw new IllegalArgumentException("Conta não encontrada.");
+		//throw instancia uma exception
+	}
+	
+	//Sacar
+	public Float sacar(Long id, Float valor) throws IllegalArgumentException {
+		Conta _conta = find(id);
+		if(_conta == null) {
+			throw new IllegalArgumentException("Conta não encontrada.");
+		} else if(_conta.getSaldo() >= valor) {
+			_conta.setSaldo(_conta.getSaldo() - valor);
+			return _conta.getSaldo();
+		}
+		throw new IllegalArgumentException("Saldo insuficiente para o saque.");
+	}
 }

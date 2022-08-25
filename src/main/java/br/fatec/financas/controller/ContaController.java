@@ -76,4 +76,25 @@ public class ContaController {
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
+	
+	//Depositar
+	@PostMapping("/deposito/{id}/{valor}")
+	public ResponseEntity<?> depositar(@PathVariable("id") Long id, @PathVariable("valor") Float valor){
+		try {
+			return ResponseEntity.ok(service.depositar(id, valor));
+		} catch(IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+			//ou ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+	}
+	
+	//Sacar
+	@PostMapping("/saque/{id}/{valor}")
+	public ResponseEntity<?> sacar(@PathVariable("id") Long id, @PathVariable("valor") Float valor){
+		try {
+			return ResponseEntity.ok(service.sacar(id, valor));
+		} catch(IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+		}
+	}
 }
